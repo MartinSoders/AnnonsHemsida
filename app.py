@@ -1,9 +1,9 @@
 ''' Imports, two new compared to part 1 '''
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os 
-from user_info import user_info
+from user_info import user_info, user_login
 
 
 ''' ------------------ Set up app and database ----------------------------------------------- '''
@@ -86,9 +86,10 @@ def login():
         else:
             if result[0][1] != request.form['password']:                                                                                                       # Om inte lösenordet stämmer
                 return f"Felaktigt lösenord för användare {input_username}"
-            else:                                                                                                                                              # Logga in och gå till home
-                Login(True, input_username)  
-                return redirect(url_for('home'))
+            else:                                                                                                                                              # Inloggning
+                Login(True, input_username)                                                                                                                    # Updatera globala variabler
+                user_login.Register(login_username, request.remote_addr)                                                                                       # Lägger till inloggning i loggen. 
+                return redirect(url_for('home'))                                                                                                               # Gå till home
         
     
     else:
@@ -105,10 +106,11 @@ def login():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     
-
-    if not login_bool:                                                                                                                                          ## Om inte login_bool
+    if not login_bool:                                                                                                                                          ## Om inte det gått via login
         return "Var vänlig logga in"
-    else:
+        
+    
+    if login_bool:                                                                                                                                              
         if request.method == 'POST':
 
             return f"Välkommen {login_username}"
