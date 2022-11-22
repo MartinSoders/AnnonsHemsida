@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask Intro - login page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Please login</h1>
+      <br>
+      <form action="" method="post">
+        <input type="text" placeholder="Användarnamn" name="nuser" value="{{request.form.nuser }}"><br>
+        <input type="password" placeholder="Password" name="npass" value="{{request.form.npass }}"><br>
+        <input type="text" placeholder="Förnamn" name="nfirst" value="{{request.form.nfirst }}"><br>
+        <input type="text" placeholder="Efternamn" name="nlast" value="{{request.form.nlast }}"><br>
+        <input type="text" placeholder="Adresss" name="naddress" value="{{request.form.naddress }}"><br>
+        <input type="text" placeholder="Postkod" name="npostal" value="{{request.form.npostal }}"><br>
+        <input type="text" placeholder="Stad" name="ncity" value="{{request.form.ncity }}"><br>
+        
+
+        <input class="btn btn-default" type="submit" name = "submit button" value="Registrera dig">
+        <input class="btn btn-default" type="submit" name = "submit button" value='Återgå'>
+      </form>
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+    </div>
+  </body>
+</html>
+
