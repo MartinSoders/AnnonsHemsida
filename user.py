@@ -11,8 +11,7 @@ db = SQLAlchemy(app)
 ## Class UserInfo
 
 class user_info(db.Model):
-    id = db.Column(db.Integer, unique = True, autoincrement = True, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False, primary_key = True)
     password = db.Column(db.String(80), unique=False, nullable=False)
     firstname = db.Column(db.String(80), unique=False, nullable=False)
     lastname = db.Column(db.String(80), unique=False, nullable=False)
@@ -43,7 +42,7 @@ class user_login(db.Model):
     # Tid och ID fixas automatiskt
     login_id = db.Column(db.Integer, unique = True, autoincrement = True, primary_key=True)
     login_time = db.Column(db.DateTime, default=datetime.now)
-    user_name = db.Column(db.String(80), nullable=False)
+    user_name = db.Column(db.String(80), db.ForeignKey("user_info.username"), nullable=False)
     user_ip = db.Column(db.String(80), nullable = False)
     def Register(user_name, user_ip):
         l = user_login()
@@ -54,7 +53,6 @@ class user_login(db.Model):
               
         ## Registrerar inloggningen 
         with app.app_context():
-            #l.user_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
             db.session.add(l)
             db.session.commit()
 
@@ -63,8 +61,7 @@ class user_login(db.Model):
     
 with app.app_context():
     db.create_all()
-    #user_info.CreateUser("admin", "admin", "admin", "adminsson", "admingatan 1", "1337", "admin city")
-    #user_login.Register(1, "192.133.0.1")
+
 
     
     

@@ -1,9 +1,9 @@
 ''' Imports, two new compared to part 1 '''
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os 
-from user_info import user_info, user_login
+from user import user_info, user_login
 
 
 ''' ------------------ Set up app and database ----------------------------------------------- '''
